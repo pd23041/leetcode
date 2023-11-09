@@ -1,0 +1,32 @@
+# 暴力解法（时间复杂度较高）
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        l = len(nums) 
+        size = float('inf') # 定义一个无限大的数
+
+        for i in range(l):
+            a = 0
+            for j in range(i,l):
+                a += nums[j]
+                if a >= target:
+                    size = min(size, j-i+1)
+
+
+        return size if size != float('inf') else 0
+
+
+# 滑动窗口法（牺牲空间换时间）
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        res = float('inf')
+        Sum = 0
+        index = 0
+
+        for i in range(len(nums)):
+            Sum += nums[i]
+
+            while Sum >= target:
+                res = min(res, i-index+1)
+                Sum -= nums[index]
+                index += 1
+        return res if res != float('inf') else 0
