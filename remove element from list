@@ -1,0 +1,14 @@
+# 用于移除元素的虚拟头节点
+
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        head_node = ListNode(next = head)  # 创建虚拟头节点，简化边缘化操作
+
+        current = head_node # current为虚拟头节点，再current上操作
+        while current.next:
+            if current.next.val == val:
+                current.next = current.next.next
+            else:
+                current = current.next
+
+        return head_node.next # 返回列表
