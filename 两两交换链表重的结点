@@ -1,0 +1,21 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        head_node = ListNode(next=head)
+        current = head_node
+
+        while current.next and current.next.next:
+            first = current.next
+            second = current.next.next
+
+            # 交换节点
+            current.next, first.next, second.next = second, second.next, first
+
+            # 移动到下一对节点
+            current = first
+
+        return head_node.next
