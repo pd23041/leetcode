@@ -1,0 +1,28 @@
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:    
+        cur = headA
+        lengtha = 0
+        while cur:  # 通过遍历 计算链表长度
+            lengtha += 1
+            cur = cur.next
+        cur = headB
+        lengthb = 0
+        while cur:  # 通过遍历 计算链表长度
+            lengthb += 1
+            cur = cur.next
+
+        cura, curb = headA, headB # 初始化AB链表头节点
+        if lengtha > lengthb:   # 同意B链表长于A链表，方便计算
+            cura, curb = curb, cura
+            lengtha, lengthb = lengthb, lengtha # 链表互换
+        
+        for _ in range(lengthb - lengtha):
+            curb = curb.next
+        
+        while curb:
+            if cura == curb:
+                return curb
+            else:
+                cura = cura.next
+                curb = curb.next
+        return None
