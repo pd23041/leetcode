@@ -1,0 +1,21 @@
+# 异位词——判断元素是否在元素中——哈希表
+
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        record = 26 * [0]
+
+        for i in s:
+            record[ord(i) - ord('a')] += 1
+
+        for i in t:
+            record[ord(i) - ord('a')] -= 1
+
+        for i in range(26):
+            if record[i] != 0:
+                return False
+        return True
