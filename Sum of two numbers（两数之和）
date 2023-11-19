@@ -1,0 +1,17 @@
+# 两种解决方案
+# 1. 暴力解法 双循环 时间复杂度O（n^2）
+# 2. 哈希 key，values——map 利用set或者dictionary存储遍历过的数
+
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        seen = set()
+        for i, num in enumerate(nums):
+            temp = target - num
+            if temp in seen:
+                return [nums.index(temp), i]
+            seen.add(num)
