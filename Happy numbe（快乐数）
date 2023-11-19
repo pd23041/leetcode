@@ -1,0 +1,16 @@
+# 要点在于判断数是否会陷入循环
+# 解决方法：构造一个set，将运算结果存入set,判断是否出现过，出现过则陷入死循环
+# 最后根据return n == 1判断是否为1 返回true或false
+
+class Solution(object):
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        seen = set() # 生成集合
+        while n != 1 and n not in seen: # 同时满足是否为1和是否出现过，避免死循环
+            seen.add(n)
+            n = sum(int(i)**2 for i in str(n))
+
+        return n == 1
