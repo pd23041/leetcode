@@ -1,0 +1,22 @@
+# 数组交集 
+# 若限制大小 可以用数组解决哈希表 哈希值少，分散可能造成极大浪费
+# 若不限制大小用set 但是set运用hash运算在空间和时间占比更重
+
+class Solution(object):
+    def intersection(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        
+        table = {}
+        for num in nums1:
+            table[num] = table.get(num, 0) + 1 # 对应num对应键值
+
+        res = set()
+        for num in nums2:
+            if num in table: # 访问字典中的键值  访问值用values()
+                res.add(num)
+                del table[num] # 防止重复访问
+        return list(res)
