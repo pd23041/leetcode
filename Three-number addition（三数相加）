@@ -1,0 +1,32 @@
+class Solution(object):
+    def threeSum(self, nums):
+        # 数组排序
+        triple = []
+        nums.sort()
+        # 双指针遍历  但是注意去重条件
+        for i in range(len(nums)):
+            if nums[i] > 0:  #  若第一个大于0 则没有结果
+                return triple
+            
+            if i > 0 and nums[i] == nums[i - 1]:  # 跳过相同的元素以避免重复
+                continue
+
+            left = i + 1
+            right = len(nums) - 1
+
+            while left < right:                           
+                sum = nums[i] + nums[left] + nums[right]
+                if sum > 0:
+                    right -= 1
+                elif sum < 0:
+                    left += 1
+                else:
+                    triple.append([nums[i], nums[left], nums[right]])
+                    # 判断两边是否相等 去重
+                    while right > left and nums[right] == nums[right - 1]:  
+                        right -= 1
+                    while right > left and nums[left] == nums[left + 1]:
+                        left += 1
+                    left += 1
+                    right -= 1
+        return triple
