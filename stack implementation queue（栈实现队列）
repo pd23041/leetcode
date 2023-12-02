@@ -1,0 +1,54 @@
+# 两个栈通过先进后出的规则 实现先进先出的队列
+
+class MyQueue(object):
+
+    def __init__(self):   # 栈可以被认为是列表或者两个栈组成一个队列
+        self.stack_in = []
+        self.stack_out = []
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.stack_in.append(x)
+
+
+    def pop(self):
+        """
+        :rtype: int
+        """
+        if self.empty():
+            return None
+        if self.stack_out:
+            return self.stack_out.pop()
+        else:
+            for i in range(len(self.stack_in)):
+                self.stack_out.append(self.stack_in.pop())
+            return self.stack_out.pop()
+
+    def peek(self):  # 只是用来查看而不是移除元素
+        """
+        :rtype: int
+        """
+        ans = self.pop()
+        self.stack_out.append(ans)
+        return ans
+
+
+    def empty(self):
+        """
+        :rtype: bool
+        """
+        if self.stack_in or self.stack_out:
+            return False
+
+        return True
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
