@@ -1,0 +1,55 @@
+# 该问题可以利用两个队列来实现  但是另一个队列只起到存储的作用
+# 以下为一个队列的优化方案 采取标准的队列先进先出的方式
+
+class MyStack(object):
+
+    def __init__(self):
+        self.que = deque()
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.que.append(x)
+
+    def pop(self):
+        """
+        :rtype: int
+        """
+        if self.empty():  # 利用队列的标准操作 利用先进先出的方式将对头元素转移到队尾
+            return None
+        for i in range(len(self.que) - 1):
+            self.que.append(self.que.popleft())
+        return self.que.popleft()
+        # return self.que.pop() # 这种方法也可行 直接从队列右边pop 但是非标准操作 相当于把队列当成栈
+
+    def top(self):  # 查看并不是取出
+        """
+        :rtype: int
+        """
+        if self.empty():
+            return  None
+        for i in range(len(self.que) - 1):
+            self.que.append(self.que.popleft())
+        temp = self.que.popleft()
+        self.que.append(temp)
+        return temp
+
+    def empty(self):
+        """
+        :rtype: bool
+        """
+        # if self.que:
+        #     return False
+        # return True
+        return len(self.que) == 0
+
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
