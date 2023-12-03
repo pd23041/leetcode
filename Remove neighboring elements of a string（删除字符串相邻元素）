@@ -1,0 +1,15 @@
+class Solution(object):
+    def removeDuplicates(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        stack = []
+        for i in s:
+            if stack and stack[-1] == i:  # 确保栈存在的条件下进行判断
+                stack.pop()
+
+            else:
+                stack.append(i)
+
+        return ''.join(stack)  # 返回字符串 ‘’.join
