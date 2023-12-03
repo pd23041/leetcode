@@ -1,0 +1,25 @@
+class Solution(object):
+    def evalRPN(self, tokens):
+        """
+        :type tokens: List[str]
+        :rtype: int
+        """
+        stack = []
+
+        for i in tokens:
+            if i not in ['+', '-', '*', '/']:   # 发现运算符 出栈前两个元素
+                stack.append(int(i))
+            else:
+                op1 = stack.pop()
+                op2 = stack.pop()
+                if i == '+':
+                    result = op2 + op1
+                elif i == '-':
+                    result = op2 - op1
+                elif i == '*':
+                    result = op2 * op1
+                elif i == '/':
+                  # 容易报错
+                    result = int(float(op2) / float(op1))  # 浮点数确保运算准确性 int截断整数
+                stack.append(result)
+        return stack.pop()
