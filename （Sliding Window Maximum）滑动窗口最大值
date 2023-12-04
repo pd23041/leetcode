@@ -1,0 +1,42 @@
+from collections import deque  # deque是底层逻辑 双端可操作
+
+class Myque:
+    def __init__(self):
+        self.que = deque()
+  
+   "" 判断单调队列中首个元素是否等于上一个滑动窗口的最大元素  等于则删除
+      若不删除 后续出现比该元素小的数值则返回的还是该元素 即报错""
+  
+    def pop(self, value):
+        if self.que and value == self.que[0]:
+            self.que.popleft()
+  
+    "" 判断队尾元素是否大于已有的元素 若有则pop已有的元素 
+       若小于则直接push
+       目的是保护最大数""
+  
+    def push(self, value):
+        while self.que and value > self.que[-1]:
+            self.que.pop()
+        self.que.append(value)
+  
+    ""  通过pop和push两个操作
+        最后返回的单调队列里首位就是最大数""
+  
+    def max(self):
+        return self.que[0]
+    
+class Solution:
+    
+    def maxSlidingWindow(self, nums, k):
+        q = Myque()
+        result = []
+        for i in range(k): # 先将第一组窗口加入到单调队列中
+            q.push(nums[i])
+        result.append(q.max())
+
+        for i in range(k, len(nums)):
+            q.pop(nums[i-k])
+            q.push(nums[i])
+            result.append(q.max())
+        return result
