@@ -1,0 +1,29 @@
+"" 解决方案
+先处理每个数字出现的频率 考虑hash-map结构
+利用小顶堆排除低频元素
+返回前K个元素
+""
+
+import heapq # 引入小顶堆
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        result = dict()
+        for i in range(len(nums)):
+            result[nums[i]] = result.get(nums[i], 0) + 1  # 若出现出 则+1 没出现过则置0加上1
+        
+        que = []
+
+        for key, value in result.items():
+            heapq.heappush(que, (value, key))  # 堆根据第一个元素进行排序 所以value在前
+            if len(que) > k:
+                heapq.heappop(que)
+
+        results = [0] * k
+        for i in range(k-1, -1, -1):
+            results[i] = heapq.heappop(que)[1]
+        return results
